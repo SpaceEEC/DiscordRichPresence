@@ -1,0 +1,418 @@
+﻿<UserControl
+    x:Class="DiscordRichPresence.Controls.Presence"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:DiscordRichPresence.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="500"
+    d:DesignWidth="500">
+
+    <UserControl.CommandBindings>
+        <CommandBinding
+            Command="ApplicationCommands.New"
+            Executed="OnDoubleClickImage"
+            CanExecute="CanDoubleClickImage"
+        />
+    </UserControl.CommandBindings>
+
+    <Grid>
+
+        <Border
+            Background="Transparent"
+            BorderBrush="Black"
+            BorderThickness="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+
+            <Border.InputBindings>
+                <MouseBinding
+                    MouseAction="LeftDoubleClick"
+                    Command="ApplicationCommands.New"
+                    CommandParameter="large"
+                />
+            </Border.InputBindings>
+
+            <Border.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Remove large image" Click="OnRemoveLargeImageMenuItemClick"/>
+                </ContextMenu>
+            </Border.ContextMenu>
+
+            <Image
+                x:Name="LargeImage"
+                HorizontalAlignment="Left"
+                Height="128"
+                VerticalAlignment="Top"
+                Width="128"
+            />
+
+        </Border>
+
+        <Border
+            Background="Transparent"
+            BorderBrush="Black"
+            BorderThickness="1"
+            HorizontalAlignment="Left"
+            Margin="85,85,0,0"
+            VerticalAlignment="Top">
+
+            <Border.InputBindings>
+                <MouseBinding
+                    MouseAction="LeftDoubleClick"
+                    Command="ApplicationCommands.New"
+                    CommandParameter="small"
+                />
+            </Border.InputBindings>
+
+            <Border.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Header="Remove small image"
+                        Click="OnRemoveSmallImageMenuItemClick"
+                    />
+                </ContextMenu>
+            </Border.ContextMenu>
+
+            <Image
+                x:Name="SmallImage"
+                HorizontalAlignment="Left"
+                Height="44"
+                Margin="-1,-1,0,0"
+                VerticalAlignment="Top"
+                Width="44"
+            />
+        </Border>
+
+        <TextBox
+            x:Name="DetailsTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="130,0,0,0"
+            TextWrapping="NoWrap"
+            VerticalAlignment="Top"
+            Width="200"
+            MaxLines="1"
+            VerticalContentAlignment="Center">
+
+            <!-- https://stackoverflow.com/a/7433840 -->
+            <!-- Seriously can't figure out how to make this properly -->
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Details" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+
+        </TextBox>
+
+        <TextBox
+            x:Name="StateTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="130,23,0,0"
+            TextWrapping="NoWrap"
+            VerticalAlignment="Top"
+            Width="200"
+            MaxLines="1"
+            VerticalContentAlignment="Center">
+
+            <!-- https://stackoverflow.com/a/7433840 -->
+            <!-- Seriously can't figure out how to make this properly -->
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="State" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <ComboBox
+            x:Name="TimestampComboBox"
+            HorizontalAlignment="Left"
+            Margin="130,46,0,0"
+            VerticalAlignment="Top"
+            Width="132"
+            Height="23"
+            SelectedIndex="1">
+            
+            <Label Content="Yesterday"/>
+            <Label Content="Today"/>
+            <Label Content="Tomorrow"/>
+        
+        </ComboBox>
+
+        <local:ValidatableTextBox
+            x:Name="TimestampTextBox" 
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="262,46,0,0"
+            VerticalAlignment="Top"
+            Width="68"
+            TextHint="hh:mm(:ss)"/>
+
+        <TextBox
+            x:Name="LargeImageTextTextBox"
+            HorizontalAlignment="Left"
+            Height="24"
+            Margin="130,69,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="200">
+
+            <!-- https://stackoverflow.com/a/7433840 -->
+            <!-- Seriously can't figure out how to make this properly -->
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Large image text" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <TextBox
+            x:Name="SmallImageTextTextBox"
+            HorizontalAlignment="Left"
+            Height="22"
+            Margin="130,93,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="200">
+
+            <!-- https://stackoverflow.com/a/7433840 -->
+            <!-- Seriously can't figure out how to make this properly -->
+            <TextBox.Style>
+                <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Small image text" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <Border
+            Background="Transparent"
+            BorderBrush="{x:Null}"
+            HorizontalAlignment="Left"
+            Margin="340,0,0,0"
+            Height="18"
+            VerticalAlignment="Top">
+
+            <TextBlock
+                x:Name="TextBlockShowYourself"
+                TextWrapping="Wrap"
+                Text="Party:"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+            />
+
+        </Border>
+
+        <local:ValidatableTextBox
+            x:Name="PartySizeTextBox"
+            HorizontalAlignment="Left"
+            Height="22"
+            Margin="374,0,0,0"
+            VerticalAlignment="Top"
+            Width="54"
+            TextHint="Current"
+        />
+        
+        <local:ValidatableTextBox
+            x:Name="PartyMaxTextBox"
+            HorizontalAlignment="Left"
+            Height="22"
+            Margin="428,0,0,0"
+            VerticalAlignment="Top"
+            Width="52"
+            TextHint="Max"
+        />
+        
+        <CheckBox
+            x:Name="InstanceCheckBox"
+            Content="Instance"
+            HorizontalAlignment="Left"
+            Margin="340,27,0,0"
+            VerticalAlignment="Top"
+            RenderTransformOrigin="0.5,-1"
+        />
+
+        <TextBox
+            x:Name="MatchSecretTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="340,46,0,0"
+            TextWrapping="NoWrap"
+            VerticalAlignment="Top"
+            Width="150"
+            MaxLines="1"
+            VerticalContentAlignment="Center">
+
+            <!-- https://stackoverflow.com/a/7433840 -->
+            <!-- Seriously can't figure out how to make this properly -->
+            <TextBox.Style>
+                <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Match secret" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+
+        </TextBox>
+        <TextBox
+            x:Name="JoinSecretTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="340,69,0,0"
+            TextWrapping="NoWrap"
+            VerticalAlignment="Top"
+            Width="150"
+            MaxLines="1"
+            VerticalContentAlignment="Center">
+
+            <!-- https://stackoverflow.com/a/7433840 -->
+            <!-- Seriously can't figure out how to make this properly -->
+            <TextBox.Style>
+                <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Join secret" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+
+        </TextBox>
+
+        <TextBox
+            x:Name="SpectateSecretTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="340,92,0,0"
+            TextWrapping="NoWrap"
+            VerticalAlignment="Top"
+            Width="150"
+            MaxLines="1"
+            VerticalContentAlignment="Center">
+
+            <!-- https://stackoverflow.com/a/7433840 -->
+            <!-- Seriously can't figure out how to make this properly -->
+            <TextBox.Style>
+                <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Spectate secret" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+
+        </TextBox>
+    </Grid>
+</UserControl>
+
