@@ -1,10 +1,10 @@
 ﻿using DiscordRichPresence.Api;
 using DiscordRichPresence.Rpc;
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace DiscordRichPresence
 {
@@ -45,7 +45,7 @@ namespace DiscordRichPresence
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex);
+                Debug.WriteLine(ex);
                 MessageBox.Show($"An error occured:\n{ex.ToString()}", "Error", MessageBoxButton.OK);
 
                 return false;

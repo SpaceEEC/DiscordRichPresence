@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CFA45C4B-6ADD-4F54-BBD6-866ABBE97E15}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>DiscordRichPresence</RootNamespace>
     <AssemblyName>DiscordRichPresence</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -189,6 +189,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y "$(ProjectDir)Rpc\*.dll" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y "$(ProjectDir)Rpc\*.dll" "$(ProjectDir)$(OutDir)"
+if $(ConfigurationName) == Release (
+7z a -t7z $(ProjectName)-$(PlatformName).7z $(TargetFileName) *.dll
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>

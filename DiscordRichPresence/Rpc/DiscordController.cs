@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 
 namespace DiscordRichPresence.Rpc
 {
@@ -6,22 +6,22 @@ namespace DiscordRichPresence.Rpc
     {
         internal void ReadyCallback()
         {
-            Console.WriteLine("Discord: ready");
+            Debug.WriteLine("Discord: ready");
         }
 
         internal void DisconnectedCallback(int errorCode, string message)
         {
-            Console.WriteLine($"Discord: disconnect {errorCode}: {message}");
+            Debug.WriteLine($"Discord: disconnect {errorCode}: {message}");
         }
 
         internal void ErrorCallback(int errorCode, string message)
         {
-            Console.WriteLine($"Discord: error {errorCode}: {message}");
+            Debug.WriteLine($"Discord: error {errorCode}: {message}");
         }
 
         internal void OnEnable(string applicationId)
         {
-            Console.WriteLine("Discord: init");
+            Debug.WriteLine("Discord: init");
 
             DiscordRpc.EventHandlers handlers = new DiscordRpc.EventHandlers();
             handlers.readyCallback += ReadyCallback;
@@ -32,7 +32,7 @@ namespace DiscordRichPresence.Rpc
 
         internal void OnDisable()
         {
-            Console.WriteLine("Discord: shutdown");
+            Debug.WriteLine("Discord: shutdown");
             DiscordRpc.Shutdown();
         }
     }
