@@ -21,7 +21,6 @@
         />
 
         <TextBox
-            Text="257884228451041280"
             x:Name="ApplicationIdTextBox"
             HorizontalAlignment="Left"
             Margin="103,16,0,0"

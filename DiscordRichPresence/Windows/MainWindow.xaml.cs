@@ -22,6 +22,9 @@ namespace DiscordRichPresence
         public MainWindow()
         {
             this.InitializeComponent();
+#if DEBUG
+            this.ApplicationIdTextBox.Text = "257884228451041280";
+#endif
         }
 
         private async Task<bool> UpdateAssets()
