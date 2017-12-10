@@ -184,12 +184,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LICENSE" />
     <Content Include="Rpc\discord-rpc.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y "$(ProjectDir)Rpc\*.dll" "$(ProjectDir)$(OutDir)"
+    <PostBuildEvent>xcopy /y /d "$(ProjectDir)Rpc\*.dll" "$(ProjectDir)$(OutDir)"
 if $(ConfigurationName) == Release (
 7z a -t7z $(ProjectName)-$(PlatformName).7z $(TargetFileName) *.dll
 )</PostBuildEvent>

@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 
 namespace DiscordRichPresence
@@ -95,6 +96,8 @@ namespace DiscordRichPresence
 
         private void OnUpdatePresenceClick(object sender, EventArgs e)
         {
+            this.LockRichPresenceButtons();
+
             DiscordRpc.RichPresence richPresence = this.PresenceControl.GetRichPresence();
             DiscordRpc.UpdatePresence(ref richPresence);
         }
@@ -102,10 +105,38 @@ namespace DiscordRichPresence
 
         private void OnRemovePresenceClick(object sender, EventArgs e)
         {
+            this.LockRichPresenceButtons();
+
             DiscordRpc.RichPresence richPresence = new DiscordRpc.RichPresence();
             DiscordRpc.UpdatePresence(ref richPresence);
         }
 
+        private void RichPresenceButtonLockTimerElapsed(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(() => this.SetRichPresenceButtonsEnabled(true));
+            Timer timer = (Timer)sender;
+            timer.Elapsed -= this.RichPresenceButtonLockTimerElapsed;
+            timer.Dispose();
+        }
+
 #endregion Event Handlers
+
+        private void LockRichPresenceButtons()
+        {
+            this.SetRichPresenceButtonsEnabled(false);
+
+            new Timer(15_000)
+            {
+                AutoReset = false,
+                Enabled = true
+            }
+            .Elapsed += this.RichPresenceButtonLockTimerElapsed;
+        }
+
+        private void SetRichPresenceButtonsEnabled(bool state)
+        {
+            this.UpdatePresenceButton.IsEnabled = state;
+            this.RemovePresenceButton.IsEnabled = state;
+        }
     }
 }
