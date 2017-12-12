@@ -24,8 +24,19 @@ namespace DiscordRichPresence.Controls
         {
             InitializeComponent();
 
-            this.PartySizeTextBox.SetValidator(this.ValidateTextBox);
-            this.PartyMaxTextBox.SetValidator(this.ValidateTextBox);
+            this.PartySizeTextBox.SetValidator(this.ValidateNumericTextBox);
+            this.PartyMaxTextBox.SetValidator(this.ValidateNumericTextBox);
+
+            this.DetailsTextBox.SetValidator(this.ValidateTextTextBox);
+            this.StateTextBox.SetValidator(this.ValidateTextTextBox);
+
+            this.LargeImageTextTextBox.SetValidator(this.ValidateTextTextBox);
+            this.SmallImageTextTextBox.SetValidator(this.ValidateTextTextBox);
+
+            this.MatchSecretTextBox.SetValidator(this.ValidateTextTextBox);
+            this.JoinSecretTextBox.SetValidator(this.ValidateTextTextBox);
+            this.SpectateSecretTextBox.SetValidator(this.ValidateTextTextBox);
+
             this.TimestampTextBox.SetValidator((textBox, text) =>
             {
                 if (String.IsNullOrEmpty(text)) return null;
@@ -48,24 +59,24 @@ namespace DiscordRichPresence.Controls
         {
             RichPresence richPresence = new RichPresence()
             {
-                state = this.StateTextBox.Text,
-                details = this.DetailsTextBox.Text,
+                state = (string)this.StateTextBox.Value,
+                details = (string)this.DetailsTextBox.Value,
                 instance = this.InstanceCheckBox.IsChecked ?? false,
-                matchSecret = this.MatchSecretTextBox.Text,
-                joinSecret = this.JoinSecretTextBox.Text,
-                spectateSecret = this.SpectateSecretTextBox.Text
+                matchSecret = (string)this.MatchSecretTextBox.Value,
+                joinSecret = (string)this.JoinSecretTextBox.Value,
+                spectateSecret = (string)this.SpectateSecretTextBox.Value
             };
 
             if (this._largeAsset != null)
             {
                 richPresence.largeImageKey = this._largeAsset.Name;
-                richPresence.largeImageText = this.LargeImageTextTextBox.Text;
+                richPresence.largeImageText = (string)this.LargeImageTextTextBox.Value;
             }
 
             if (this._smallAsset != null)
             {
                 richPresence.smallImageKey = this._smallAsset.Name;
-                richPresence.smallImageText = this.SmallImageTextTextBox.Text;
+                richPresence.smallImageText = (string)this.SmallImageTextTextBox.Value;
             }
 
             if (this.PartyMaxTextBox != null && this.PartySizeTextBox.Value != null)
@@ -106,7 +117,7 @@ namespace DiscordRichPresence.Controls
             return richPresence;
         }
 
-        private object ValidateTextBox(ValidatableTextBox textBox, string text)
+        private object ValidateNumericTextBox(ValidatableTextBox textBox, string text)
         {
             if (String.IsNullOrEmpty(text)) return null;
 
@@ -116,7 +127,17 @@ namespace DiscordRichPresence.Controls
             return textBox;
         }
 
-#region Wpf Event Callbacks
+        private object ValidateTextTextBox(ValidatableTextBox textBox, string text)
+        {
+            if (text.Length == 0 || text.Length > 1)
+            {
+                return text;
+            }
+
+            return textBox;
+        }
+
+        #region Wpf Event Callbacks
 
         private void CanDoubleClickImage(object sender, CanExecuteRoutedEventArgs e)
         {
