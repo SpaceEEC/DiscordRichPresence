@@ -42,18 +42,13 @@ namespace DiscordRichPresence.Controls
                 if (String.IsNullOrEmpty(text)) return null;
 
                 if (DateTime.TryParse(text, out DateTime parsedTime))
-                {
                     return parsedTime;
-                }
 
                 return textBox;
             });
         }
 
-        internal void SetAssets(DiscordAsset[] assets)
-        {
-            this._assets = assets;
-        }
+        internal void SetAssets(DiscordAsset[] assets) => this._assets = assets;
 
         internal RichPresence GetRichPresence()
         {
@@ -92,26 +87,17 @@ namespace DiscordRichPresence.Controls
 
                 // Yesterday
                 if (this.TimestampComboBox.SelectedIndex == 0)
-                {
                     dateTime = dateTime.AddDays(-1);
-                }
                 // Tomorrow
                 else if (this.TimestampComboBox.SelectedIndex == 2)
-                {
                     dateTime = dateTime.AddDays(1);
-                }
 
                 // Now or in the past
                 if (dateTime <= DateTime.Now)
-                {
                     richPresence.startTimestamp = ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
-                }
                 // In the future
                 else
-                {
                     richPresence.endTimestamp = ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
-                }
-
             }
 
             return richPresence;
@@ -130,9 +116,7 @@ namespace DiscordRichPresence.Controls
         private object ValidateTextTextBox(ValidatableTextBox textBox, string text)
         {
             if (text.Length == 0 || text.Length > 1)
-            {
                 return text;
-            }
 
             return textBox;
         }
@@ -140,9 +124,7 @@ namespace DiscordRichPresence.Controls
         #region Wpf Event Callbacks
 
         private void CanDoubleClickImage(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
+            => e.CanExecute = true;
 
         private void OnDoubleClickImage(object sender, ExecutedRoutedEventArgs e)
         {

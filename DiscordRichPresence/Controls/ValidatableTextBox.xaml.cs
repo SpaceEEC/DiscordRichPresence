@@ -40,16 +40,9 @@ namespace DiscordRichPresence.Controls
             }
         }
 
-        public ValidatableTextBox()
-        {
-            this.InitializeComponent();
-        }
+        public ValidatableTextBox() => this.InitializeComponent();
 
-
-        internal void SetValidator(Validator validator)
-        {
-            this._validator = validator;
-        }
+        internal void SetValidator(Validator validator) => this._validator = validator;
 
         private void OnTextBoxTextChanged(object sender, EventArgs e)
         {

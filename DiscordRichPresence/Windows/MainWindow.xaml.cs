@@ -60,10 +60,7 @@ namespace DiscordRichPresence
 
 #region Event Handlers
 
-        private void OnClosing(object sender, EventArgs e)
-        {
-            this._controller?.OnDisable();
-        }
+        private void OnClosing(object sender, EventArgs e) => this._controller?.OnDisable();
 
         private async void OnEnableApplicationClick(object sender, EventArgs e)
         {
