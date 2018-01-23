@@ -107,8 +107,7 @@ namespace DiscordRichPresence
         {
             this.LockRichPresenceButtons();
 
-            DiscordRpc.RichPresence richPresence = new DiscordRpc.RichPresence();
-            DiscordRpc.UpdatePresence(ref richPresence);
+            DiscordRpc.ClearPresence();
         }
 
         private void RichPresenceButtonLockTimerElapsed(object sender, EventArgs e)

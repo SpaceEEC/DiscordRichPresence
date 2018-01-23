@@ -2,6 +2,7 @@
 
 namespace DiscordRichPresence.Rpc
 {
+    /* https://github.com/discordapp/discord-rpc/blob/master/examples/button-clicker/Assets/DiscordRpc.cs */
     internal class DiscordRpc
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -79,6 +80,9 @@ namespace DiscordRichPresence.Rpc
 
         [DllImport("discord-rpc", EntryPoint = "Discord_UpdatePresence", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void UpdatePresence(ref RichPresence presence);
+
+        [DllImport("discord-rpc", EntryPoint = "Discord_ClearPresence", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ClearPresence();
 
         [DllImport("discord-rpc", EntryPoint = "Discord_Respond", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void Respond(string userId, Reply reply);
