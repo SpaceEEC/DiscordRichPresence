@@ -12,8 +12,8 @@ namespace DiscordRichPresence.Controls
 	/// </summary>
 	public partial class ValidatableTextBox : UserControl
 	{
-		internal object Value { get; private set; }
-		internal delegate object Validator(ValidatableTextBox box, string value);
+		internal Object Value { get; private set; }
+		internal delegate Object Validator(ValidatableTextBox box, String value);
 		private Validator _validator = (_, __) => null;
 
 		private Brush _textHint;
@@ -21,9 +21,9 @@ namespace DiscordRichPresence.Controls
 		[Browsable(true)]
 		[Bindable(true)]
 		[Category("Appearance")]
-		public string TextHint
+		public String TextHint
 		{
-			get => ((this._textHint as VisualBrush).Visual as Label).Content as string;
+			get => ((this._textHint as VisualBrush).Visual as Label).Content as String;
 			set
 			{
 				this._textHint = this.InputTextBox.Background = new VisualBrush()
@@ -44,10 +44,10 @@ namespace DiscordRichPresence.Controls
 
 		internal void SetValidator(Validator validator) => this._validator = validator;
 
-		private void OnTextBoxTextChanged(object sender, EventArgs e)
+		private void OnTextBoxTextChanged(Object sender, EventArgs e)
 		{
 			TextBox textBox = (TextBox)sender;
-			object result = this._validator(this, textBox.Text);
+			Object result = this._validator(this, textBox.Text);
 
 			if (String.IsNullOrEmpty(textBox.Text))
 				textBox.Background = this._textHint;
@@ -66,7 +66,7 @@ namespace DiscordRichPresence.Controls
 			}
 		}
 
-		private void OnIsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
+		private void OnIsKeyboardFocusedChanged(Object sender, DependencyPropertyChangedEventArgs e)
 		{
 			TextBox textBox = (TextBox)sender;
 

@@ -12,16 +12,16 @@ namespace DiscordRichPresence.Rpc
 		public delegate void ReadyCallback(ref DiscordUser connectedUser);
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void DisconnectedCallback(int errorCode, string message);
+		public delegate void DisconnectedCallback(Int32 errorCode, String message);
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void ErrorCallback(int errorCode, string message);
+		public delegate void ErrorCallback(Int32 errorCode, String message);
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void JoinCallback(string secret);
+		public delegate void JoinCallback(String secret);
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void SpectateCallback(string secret);
+		public delegate void SpectateCallback(String secret);
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate void RequestCallback(ref DiscordUser connectedUser);
@@ -41,19 +41,19 @@ namespace DiscordRichPresence.Rpc
 		{
 			public IntPtr state; /* max 128 bytes */
 			public IntPtr details; /* max 128 bytes */
-			public long startTimestamp;
-			public long endTimestamp;
+			public Int64 startTimestamp;
+			public Int64 endTimestamp;
 			public IntPtr largeImageKey; /* max 32 bytes */
 			public IntPtr largeImageText; /* max 128 bytes */
 			public IntPtr smallImageKey; /* max 32 bytes */
 			public IntPtr smallImageText; /* max 128 bytes */
 			public IntPtr partyId; /* max 128 bytes */
-			public int partySize;
-			public int partyMax;
+			public Int32 partySize;
+			public Int32 partyMax;
 			public IntPtr matchSecret; /* max 128 bytes */
 			public IntPtr joinSecret; /* max 128 bytes */
 			public IntPtr spectateSecret; /* max 128 bytes */
-			public bool instance;
+			public Boolean instance;
 		}
 
 #pragma warning disable CS0649
@@ -61,10 +61,10 @@ namespace DiscordRichPresence.Rpc
 		[Serializable]
 		public struct DiscordUser
 		{
-			public string userId;
-			public string username;
-			public string discriminator;
-			public string avatar;
+			public String userId;
+			public String username;
+			public String discriminator;
+			public String avatar;
 		}
 #pragma warning restore CS0649
 
@@ -76,7 +76,7 @@ namespace DiscordRichPresence.Rpc
 		}
 
 		[DllImport("discord-rpc", EntryPoint = "Discord_Initialize", CallingConvention = CallingConvention.Cdecl)]
-		public static extern void Initialize(string applicationId, ref EventHandlers handlers, bool autoRegister, string optionalSteamId);
+		public static extern void Initialize(String applicationId, ref EventHandlers handlers, Boolean autoRegister, String optionalSteamId);
 
 		[DllImport("discord-rpc", EntryPoint = "Discord_Shutdown", CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Shutdown();
@@ -91,7 +91,7 @@ namespace DiscordRichPresence.Rpc
 		public static extern void ClearPresence();
 
 		[DllImport("discord-rpc", EntryPoint = "Discord_Respond", CallingConvention = CallingConvention.Cdecl)]
-		public static extern void Respond(string userId, Reply reply);
+		public static extern void Respond(String userId, Reply reply);
 
 		[DllImport("discord-rpc", EntryPoint = "Discord_UpdateHandlers", CallingConvention = CallingConvention.Cdecl)]
 		public static extern void UpdateHandlers(ref EventHandlers handlers);
@@ -108,21 +108,21 @@ namespace DiscordRichPresence.Rpc
 			private RichPresenceStruct _presence;
 			private readonly List<IntPtr> _buffers = new List<IntPtr>(10);
 
-			public string state; /* max 128 bytes */
-			public string details; /* max 128 bytes */
-			public long startTimestamp;
-			public long endTimestamp;
-			public string largeImageKey; /* max 32 bytes */
-			public string largeImageText; /* max 128 bytes */
-			public string smallImageKey; /* max 32 bytes */
-			public string smallImageText; /* max 128 bytes */
-			public string partyId; /* max 128 bytes */
-			public int partySize;
-			public int partyMax;
-			public string matchSecret; /* max 128 bytes */
-			public string joinSecret; /* max 128 bytes */
-			public string spectateSecret; /* max 128 bytes */
-			public bool instance;
+			public String state; /* max 128 bytes */
+			public String details; /* max 128 bytes */
+			public Int64 startTimestamp;
+			public Int64 endTimestamp;
+			public String largeImageKey; /* max 32 bytes */
+			public String largeImageText; /* max 128 bytes */
+			public String smallImageKey; /* max 32 bytes */
+			public String smallImageText; /* max 128 bytes */
+			public String partyId; /* max 128 bytes */
+			public Int32 partySize;
+			public Int32 partyMax;
+			public String matchSecret; /* max 128 bytes */
+			public String joinSecret; /* max 128 bytes */
+			public String spectateSecret; /* max 128 bytes */
+			public Boolean instance;
 
 			/// <summary>
 			/// Get the <see cref="RichPresenceStruct"/> reprensentation of this instance
@@ -155,16 +155,16 @@ namespace DiscordRichPresence.Rpc
 			}
 
 			/// <summary>
-			/// Returns a pointer to a representation of the given string with a size of maxbytes
+			/// Returns a pointer to a representation of the given String with a size of maxbytes
 			/// </summary>
 			/// <param name="input">String to convert</param>
 			/// <returns>Pointer to the UTF-8 representation of <see cref="input"/></returns>
-			private IntPtr StrToPtr(string input)
+			private IntPtr StrToPtr(String input)
 			{
-				if (string.IsNullOrEmpty(input)) return IntPtr.Zero;
+				if (String.IsNullOrEmpty(input)) return IntPtr.Zero;
 				var convbytecnt = Encoding.UTF8.GetByteCount(input);
 				var buffer = Marshal.AllocHGlobal(convbytecnt + 1);
-				for (int i = 0; i < convbytecnt + 1; i++)
+				for (Int32 i = 0; i < convbytecnt + 1; i++)
 				{
 					Marshal.WriteByte(buffer, i, 0);
 				}
@@ -174,11 +174,11 @@ namespace DiscordRichPresence.Rpc
 			}
 
 			/// <summary>
-			/// Convert string to UTF-8 and add null termination
+			/// Convert String to UTF-8 and add null termination
 			/// </summary>
-			/// <param name="toconv">string to convert</param>
+			/// <param name="toconv">String to convert</param>
 			/// <returns>UTF-8 representation of <see cref="toconv"/> with added null termination</returns>
-			private static string StrToUtf8NullTerm(string toconv)
+			private static String StrToUtf8NullTerm(String toconv)
 			{
 				var str = toconv.Trim();
 				var bytes = Encoding.Default.GetBytes(str);

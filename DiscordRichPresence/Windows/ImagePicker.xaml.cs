@@ -16,7 +16,7 @@ namespace DiscordRichPresence.Windows
 		{
 			this.InitializeComponent();
 
-			for (int i = 0; i < assets.Length; ++i)
+			for (Int32 i = 0; i < assets.Length; ++i)
 			{
 				ClickableImage image = new ClickableImage(assets[i]);
 				image.MouseDoubleClick += this.OnImageDoubleClick;
@@ -24,7 +24,7 @@ namespace DiscordRichPresence.Windows
 			}
 		}
 
-		private void OnImageDoubleClick(object sender, EventArgs e)
+		private void OnImageDoubleClick(Object sender, EventArgs e)
 		{
 			this.DialogResult = true;
 			this.SelectedAsset = ((ClickableImage)sender).Asset;

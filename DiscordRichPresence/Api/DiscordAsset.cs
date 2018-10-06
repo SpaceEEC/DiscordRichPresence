@@ -17,21 +17,21 @@ namespace DiscordRichPresence.Api
 		[JsonProperty("type")]
 		internal readonly AssetType Type;
 		[JsonProperty("id")]
-		internal readonly ulong Id;
+		internal readonly Int64 Id;
 		[JsonProperty("name")]
-		internal readonly string Name;
+		internal readonly String Name;
 #pragma warning restore CS0649
 
-		internal bool IsInitialized => this._image != null;
-		internal string ImageUrl => this._applicationId != null
+		internal Boolean IsInitialized => this._image != null;
+		internal String ImageUrl => this._applicationId != null
 			? $"https://cdn.discordapp.com/app-assets/{this._applicationId}/{this.Id}.png"
 			: throw new InvalidOperationException("Asset has not been initialized yet!");
 		internal ImageSource Image => this._image ?? throw new InvalidOperationException("Asset has not been initialized yet!");
 
-		private string _applicationId = null;
+		private String _applicationId = null;
 		private ImageSource _image = null;
 
-		internal void Init(string applicationId)
+		internal void Init(String applicationId)
 		{
 			if (this._image != null) return;
 

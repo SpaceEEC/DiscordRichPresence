@@ -46,31 +46,31 @@ namespace DiscordRichPresence.Controls
 		{
 			RichPresence richPresence = new RichPresence()
 			{
-				state = (string)this.StateTextBox.Value,
-				details = (string)this.DetailsTextBox.Value,
+				state = (String)this.StateTextBox.Value,
+				details = (String)this.DetailsTextBox.Value,
 				instance = this.InstanceCheckBox.IsChecked ?? false,
-				matchSecret = (string)this.MatchSecretTextBox.Value,
-				joinSecret = (string)this.JoinSecretTextBox.Value,
-				spectateSecret = (string)this.SpectateSecretTextBox.Value
+				matchSecret = (String)this.MatchSecretTextBox.Value,
+				joinSecret = (String)this.JoinSecretTextBox.Value,
+				spectateSecret = (String)this.SpectateSecretTextBox.Value
 			};
 
 			if (this._largeAsset != null)
 			{
 				richPresence.largeImageKey = this._largeAsset.Name;
-				richPresence.largeImageText = (string)this.LargeImageTextTextBox.Value;
+				richPresence.largeImageText = (String)this.LargeImageTextTextBox.Value;
 			}
 
 			if (this._smallAsset != null)
 			{
 				richPresence.smallImageKey = this._smallAsset.Name;
-				richPresence.smallImageText = (string)this.SmallImageTextTextBox.Value;
+				richPresence.smallImageText = (String)this.SmallImageTextTextBox.Value;
 			}
 
 			if (this.PartyMaxTextBox != null && this.PartySizeTextBox.Value != null)
 			{
 				richPresence.partyId = "partyId";
-				richPresence.partySize = (int)this.PartySizeTextBox.Value;
-				richPresence.partyMax = (int)this.PartyMaxTextBox.Value;
+				richPresence.partySize = (Int32)this.PartySizeTextBox.Value;
+				richPresence.partyMax = (Int32)this.PartyMaxTextBox.Value;
 			}
 
 			if (this.TimestampTextBox.Value != null)
@@ -95,7 +95,7 @@ namespace DiscordRichPresence.Controls
 			return richPresence;
 		}
 
-		private object ValidateDateTimeTextBox(ValidatableTextBox textBox, string text)
+		private Object ValidateDateTimeTextBox(ValidatableTextBox textBox, String text)
 		{
 			if (String.IsNullOrEmpty(text)) return null;
 
@@ -105,17 +105,17 @@ namespace DiscordRichPresence.Controls
 			return textBox;
 		}
 
-		private object ValidateNumericTextBox(ValidatableTextBox textBox, string text)
+		private Object ValidateNumericTextBox(ValidatableTextBox textBox, String text)
 		{
 			if (String.IsNullOrEmpty(text)) return null;
 
-			if (int.TryParse(text, out int value))
+			if (Int32.TryParse(text, out Int32 value))
 				return value;
 
 			return textBox;
 		}
 
-		private object ValidateTextTextBox(ValidatableTextBox textBox, string text)
+		private Object ValidateTextTextBox(ValidatableTextBox textBox, String text)
 		{
 			if (text.Length == 0 || text.Length > 1)
 				return text;
@@ -125,12 +125,12 @@ namespace DiscordRichPresence.Controls
 
 		#region Wpf Event Callbacks
 
-		private void CanDoubleClickImage(object sender, CanExecuteRoutedEventArgs e)
+		private void CanDoubleClickImage(Object sender, CanExecuteRoutedEventArgs e)
 			=> e.CanExecute = true;
 
-		private void OnDoubleClickImage(object sender, ExecutedRoutedEventArgs e)
+		private void OnDoubleClickImage(Object sender, ExecutedRoutedEventArgs e)
 		{
-			string parameter = (string)e.Parameter;
+			String parameter = (String)e.Parameter;
 
 			ImagePicker picker = new ImagePicker(this._assets);
 			if (!(picker.ShowDialog() ?? false)) return;
@@ -153,13 +153,13 @@ namespace DiscordRichPresence.Controls
 			}
 		}
 
-		private void OnRemoveSmallImageMenuItemClick(object sender, RoutedEventArgs e)
+		private void OnRemoveSmallImageMenuItemClick(Object sender, RoutedEventArgs e)
 		{
 			this._smallAsset = null;
 			this.SmallImage.Source = null;
 		}
 
-		private void OnRemoveLargeImageMenuItemClick(object sender, RoutedEventArgs e)
+		private void OnRemoveLargeImageMenuItemClick(Object sender, RoutedEventArgs e)
 		{
 			this._largeAsset = null;
 			this.LargeImage.Source = null;
