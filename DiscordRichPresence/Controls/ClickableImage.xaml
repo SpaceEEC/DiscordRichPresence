@@ -9,7 +9,7 @@
     d:DesignWidth="300">
 
     <Grid>
-        
+
         <Image
             x:Name="Image"
             Height="64"

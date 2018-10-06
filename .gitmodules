@@ -1,0 +1,4 @@
+[submodule "discord-rpc"]
+	path = discord-rpc
+	url = git@github.com:discordapp/discord-rpc.git
+	branch = master
