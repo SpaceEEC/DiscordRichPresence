@@ -174,22 +174,6 @@ namespace DiscordRichPresence.Rpc
 			}
 
 			/// <summary>
-			/// Convert String to UTF-8 and add null termination
-			/// </summary>
-			/// <param name="toconv">String to convert</param>
-			/// <returns>UTF-8 representation of <see cref="toconv"/> with added null termination</returns>
-			private static String StrToUtf8NullTerm(String toconv)
-			{
-				var str = toconv.Trim();
-				var bytes = Encoding.Default.GetBytes(str);
-				if (bytes.Length > 0 && bytes[bytes.Length - 1] != 0)
-				{
-					str += "\0\0";
-				}
-				return Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(str));
-			}
-
-			/// <summary>
 			/// Free the allocated memory for conversion to <see cref="RichPresenceStruct"/>
 			/// </summary>
 			internal void FreeMem()
